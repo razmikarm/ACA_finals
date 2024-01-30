@@ -7,6 +7,22 @@ This repository contains 4 simple projects:
 - Calendar
 - Gauss-Jordan Implementation
 
-### Usage
+### Tips
+> To escape problems with `File Organizer`, using absolute paths are recommended.
 
-To escape problems with `File Organizer`, using absolute paths are recommended.
+## Gauss-Jordan Implementation
+
+In this project, you will be required to develop a code that will, given:
+- M*N matrix A
+- M-sized vector b
+
+solve the equation `Ax=b` using the `Gauss-Jordan Reduction` algorithm.
+
+It should print out the steps (e.g. `R1 - 2*R3`) in a human-friendly format.
+
+Cases to be covered:
+- If there is a unique solution, print the solution
+- If there is no solution, print that there is no solution
+- If there are infinitely many solutions, print them in the form, e.g.,
+
+![Math representation](sandbox/image.png)

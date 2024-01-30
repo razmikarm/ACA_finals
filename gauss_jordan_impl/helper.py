@@ -1,6 +1,6 @@
 import os
 import numpy as np
-from matrices import CoefficientMatrix, ConstantMatrix
+from matrices import Matrix, CoefficientMatrix, ConstantMatrix
 
 
 class Helper:
@@ -45,17 +45,17 @@ class Helper:
     @staticmethod
     def get_coeficent_matrix(m: int, n: int) -> CoefficientMatrix:
         matrix_list = []
-        max_len = 1
+        cell_len = 1
         for i in range(1, m+1):
             matrix_list.append([])
             for j in range(1, n+1):
-                Helper.draw_matrix(matrix_list, m, n, max_len, True)
+                Helper.draw_matrix(matrix_list, m, n, cell_len, True)
                 msg = f'Enter value for [{i}, {j}] position: '
                 num = Helper.get_number(msg, safe=True)
-                if len(str(num)) > max_len:
-                    max_len = len(str(num))
+                if len(str(num)) > cell_len:
+                    cell_len = len(str(num))
                 matrix_list[-1].append(num)
-        return matrix_list
+        return CoefficientMatrix(matrix_list)
 
     @staticmethod    
     def get_constant_matrix(m: int) -> ConstantMatrix:
@@ -65,21 +65,20 @@ class Helper:
             2: 'nd',
             3: 'rd',
         }
-        max_len = 1
+        cell_len = 1
         for i in range(1, m+1):
             pos = poses.get(i, 'th')
-            Helper.draw_matrix(vector_list, m, 0, max_len, True)
+            Helper.draw_matrix(vector_list, m, 0, cell_len, True)
             msg = f'Enter {i}{pos} value: '
             num = Helper.get_number(msg, safe=True)
-            if len(str(num)) > max_len:
-                max_len = len(str(num))
+            if len(str(num)) > cell_len:
+                cell_len = len(str(num))
             vector_list.append(num)
-        return vector_list
+        return ConstantMatrix(vector_list)
 
     @staticmethod
-    def confirm():
-        print()
-        input('Press enter to continue...')
+    def pause():
+        input('\nPress enter to continue...')
 
     @staticmethod
     def clear():
@@ -93,7 +92,7 @@ class Helper:
         matrix: list[list[int | float]],
         m: int,
         n: int = 0,
-        max_len: int = None,
+        cell_len: int = None,
         clear: bool = False,
         *,
         header: str = '',
@@ -112,7 +111,7 @@ class Helper:
         border_bottomright = "┘"
         here = '◆'
 
-        if max_len is None:
+        if cell_len is None:
             maxx = 1
             k = lambda x: len(str(x))
             for row in matrix:
@@ -120,7 +119,7 @@ class Helper:
                     maxx = max(maxx, max(row, key=k), key=k)
                 elif isinstance(row, (int, float)):
                     maxx = max(maxx, row, key=k)
-            max_len = len(str(maxx))
+            cell_len = len(str(maxx))
 
 
         view = f"\n{header}"
@@ -139,22 +138,22 @@ class Helper:
             # if drawing vector
             if n == 0:
                 if i < len(matrix):
-                    cells = f'{matrix[i]:^{max_len}}'
+                    cells = f'{matrix[i]:^{cell_len}}'
                 elif i == len(matrix):
-                    cells = f'{here:^{max_len}}'
+                    cells = f'{here:^{cell_len}}'
                 else:
-                    cells = f'{" " * max_len}'
+                    cells = f'{" " * cell_len}'
 
             for j in range(n):
                 if i < len(matrix):
                     if j < len(matrix[i]):
-                        cell = f'{matrix[i][j]:^{max_len}}'
+                        cell = f'{matrix[i][j]:^{cell_len}}'
                     elif j == len(matrix[i]):
-                        cell = f'{here:^{max_len}}'
+                        cell = f'{here:^{cell_len}}'
                     else:
-                        cell = f'{" " * max_len}'
+                        cell = f'{" " * cell_len}'
                 else:
-                    cell = f'{" " * max_len}'
+                    cell = f'{" " * cell_len}'
 
                 if cells == '':
                     cells = cell

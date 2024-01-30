@@ -1,9 +1,10 @@
-from abc import ABC, abstractmethod
 import numpy as np
 
 
-class Matrix(ABC):
-    pass
+class Matrix:
+    
+    def __init__(self, lst):
+        self.data = np.array(lst)
 
 
 class CoefficientMatrix(Matrix):

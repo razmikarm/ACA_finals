@@ -8,7 +8,7 @@ def main():
     Helper.clear()
     Helper.draw_matrix(constant, m, header='Constant Matrix:')
     Helper.draw_matrix(coefficient, m, n, header='Coefficient Matrix:')
-    Helper.confirm()
+    Helper.pause()
     sle = SLE(coefficient, constant)
     sle.to_ref()
 
